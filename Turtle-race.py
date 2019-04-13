@@ -11,24 +11,18 @@ A=25
 y=(A*2)+(B*3)
 goal=x/2-10
 
-### warna random ###
+### warna turtles ###
 
-colors1=["blue", "black", "brown", "cyan"]
-colors2=["red", "yellow", "sandybrown", "orange"]
-colors3=["magenta", "purple", "pink", "rosybrown"]
-colors4=["beige", "turquoise", "green", "moccasin"]
-
-baa=random.choice(colors1)
-bii=random.choice(colors2)
-buu=random.choice(colors3)
-bee=random.choice(colors4)
+le="red"
+gen="blue"
+da="green"
 
 hideturtle() #Agar pointer turtlenya hilang
 
 ### Membuat lapangan balap ###
 
 penup() 
-goto(-(x/2),-(y/2)) #Supaya berada di tengah
+goto(-(x/2),-(y-200)) #Supaya berada di tengah
 pendown()
 pencolor("black")
 forward(x)
@@ -43,91 +37,125 @@ penup()
 start=time.time() #Perhitungan elapsed time dimulai
 
 ba=Turtle()
-ba.color(baa)
+ba.color(le)
 ba.shape("turtle")
 
 ba.penup()
-ba.goto(-(x/2)+25, 30) #koordinat untuk turtle kuning
+ba.goto(-(x/2)+25, 180)
 ba.pendown()
 
 bi=Turtle()
-bi.color(bii)
+bi.color(gen)
 bi.shape("turtle")
 
 bi.penup()
-bi.goto(-(x/2)+25, 10) #koordinat turtle hijau di bawa kuning 25pxl
+bi.goto(-(x/2)+25, 150) 
 bi.pendown()
 
 bu=Turtle()
-bu.color(buu)
+bu.color(da)
 bu.shape("turtle")
 
 bu.penup()
-bu.goto(-(x/2)+25, -10) #koordinar biru, jarak 25pxl
+bu.goto(-(x/2)+25, 120) 
 bu.pendown()
-
-be=Turtle()
-be.color(bee)
-be.shape("turtle")
-
-be.penup()
-be.goto(-(x/2)+25, -30) #koordinat merah, jarak 25pxl
-be.pendown()
 
 ## Meminta pilihan user ##
 
-print("Daftar warna dari atas ke bawah")
-print(baa)
-print(bii)
-print(buu)
-print(bee)
+print("Daftar warna dari atas ke bawah: le-gen-da")
 print("\nPasang Taruhan")
-usrone=input("Pilihan User 1: ")
-usrtwo=input("Pilihan User 2: ")
+print("Player 1")
+usrone_first=input("1: ")
+usrone_second=input("2: ")
+usrone_third=input("3: ")
+bet1=int(input("Bet: "))
+print("Player 2")
+usrtwo_first=input("1: ")
+usrtwo_second=input("2: ")
+usrtwo_third=input("3: ")
+bet2=int(input("Bet: "))
 
 ### Mengatur jalannya turtle ###
 
-while (ba.xcor()<=goal) and (bi.xcor()<=goal) and (bu.xcor()<=goal) and (be.xcor()<=goal):
-	ba.forward(randint(4,15))
-	bi.forward(randint(4,15))
-	bu.forward(randint(4,15))
-	be.forward(randint(4,15))
+while (ba.xcor()<=goal) and (bi.xcor()<=goal) and (bu.xcor()<=goal):
+	ba.forward(randint(5,15))
+	bi.forward(randint(5,15))
+	bu.forward(randint(5,15))
 
 end=time.time() #Perhitungan waktu selesai
 
 ### Output Pemenang ###
 
-goto(0,-(y/2)-30) #Agar di bawah
+goto(0,(y/2)) #Agar di bawah
+
+nilai1=0
+nilai2=0
 
 if ba.xcor()>x/2-10:
-	pencolor(baa)
-	turtle.write("The winner of the race is: "+baa+"!", True, align="center", font=("arial", "12", "bold"))
-	winner=baa
+	pencolor(le)
+	first="le"
+	if bi.xcor()>bu.xcor():
+		second="gen"
+		third="da"
+		turtle.write("Juara 1 = le; Juara 2 = gen; Juara 3: da", True, align="center", font=("arial", "12", "bold"))
+	else:
+		second="da"
+		third="gen"
+		turtle.write("Juara 1 = le; Juara 2 = da; Juara 3: gen", True, align="center", font=("arial", "12", "bold"))
 elif bi.xcor()>x/2-10:
-	pencolor(bii)
-	turtle.write("The winner of the race is: "+bii+"!", True, align="center", font=("arial", "12", "bold"))
-	winner=bii
+	pencolor(gen)
+	first="gen"
+	if ba.xcor()>bu.xcor():
+		second="le"
+		third="da"
+		turtle.write("Juara 1 = gen; Juara 2 = le; Juara 3: da", True, align="center", font=("arial", "12", "bold"))
+	else:
+		second="da"
+		third="le"
+		turtle.write("Juara 1 = gen; Juara 2 = da; Juara 3: le", True, align="center", font=("arial", "12", "bold"))
 elif bu.xcor()>x/2-10:
-	pencolor(buu)
-	turtle.write("The winner of the race is: "+buu+"!", True, align="center", font=("arial", "12", "bold"))
-	winner=buu
-else:
-	pencolor(bee)
-	turtle.write("The winner of the race is: "+bee+"!", True, align="center", font=("arial", "12", "bold"))
-	winner=bee
+	pencolor(da)
+	first=da
+	if ba.xcor()>bi.xcor():
+		second="le"
+		third="gen"
+		turtle.write("Juara 1 = da; Juara 2 = le; Juara 3: gen", True, align="center", font=("arial", "12", "bold"))
+	else:
+		second="gen"
+		third="le"
+		turtle.write("Juara 1 = da; Juara 2 = gen; Juara 3: le", True, align="center", font=("arial", "12", "bold"))
 
-### Output Waktu ###
+### Perhitungan Nilai ###	
+	
+if usrone_first==first:
+	nilai1+=1
+if usrone_second==second:
+	nilai1+=1
+if usrone_third==third:
+	nilai1+=1
+if usrtwo_first==first:
+	nilai2+=1
+if usrtwo_second==second:
+	nilai2+=1
+if usrtwo_third==third:
+	nilai2+=1
+			
 
-goto(0,-(y/2)-50) # agar di bawah pemenang
+goto(0,(y/2)-20) # agar di bawah pemenang
 pencolor("black")
-turtle.write("Time elapsed is: "+str(end-start)+" seconds", True, align="center", font=("arial", "10", "bold"))
-
-goto(0,-(y/2)-70) # agar di bawah pemenang
-pencolor(winner)
-if winner==usrone:
-	turtle.write("User 1 menang", True, align="center", font=("arial", "10", "bold"))
-elif winner==usrtwo:
-	turtle.write("User 2 menang", True, align="center", font=("arial", "10", "bold"))
+if nilai1>nilai2:
+	turtle.write("Player 1 menang", True, align="center", font=("arial", "10", "bold"))
+elif nilai1<nilai2:
+	turtle.write("Player 2 menang", True, align="center", font=("arial", "10", "bold"))
 else:
 	turtle.write("Draw", True, align="center", font=("arial", "10", "bold"))
 
+if nilai1>nilai2:
+	bet1+=bet2
+	bet2=0
+elif nilai1<nilai2:
+	bet2+=bet1
+	bet1=0
+	
+print("Saldo Player 1 :", str(bet1))
+print("Saldo Player 2 :", str(bet2))
